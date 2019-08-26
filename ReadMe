@@ -1,6 +1,7 @@
 # Deltax
 In this assignment we create one small application in which we are showing the details of movies release in 2019, where we can add new movies also can update existing movies.
-here one more form is also availabe for adding actors of that perticular movie they may be  more than one.
+here one more form is also availabe for adding actors of that perticular movie they may be  more than one. I used here MEAN stack for develpo this aplication.
+In this project I used angular for client side work. Where I used ngx-bootstrap for disign, all forms are reactive forms for better validation, I used validation for every form and done all validations.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2. and node.js version 11.10.1 and mongo for backend version 4.2.0
 
