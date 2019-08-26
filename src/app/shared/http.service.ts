@@ -15,6 +15,8 @@ export class HttpService {
   addActorURL = 'http://localhost:3000/deltax/addActor/';
   getActors = 'http://localhost:3000/deltax/getActors/';
   uploadPhotoURL = 'http://localhost:3000/deltax/uploadPhoto/';
+  getSingleMovieURL = 'http://localhost:3000/deltax/getSingleMovie/';
+  updateMovieURL = 'http://localhost:3000/deltax/editMovie/';
 
   createMovie(data) {
     return this.http.post<any>(this.addMovieURL, data)
@@ -34,6 +36,13 @@ export class HttpService {
 
   fetchMovieList() {
     return this.http.get(this.getMovielistURL);
+  }
+
+  getSingleMovie(movieId) {
+    return this.http.get(`${this.getSingleMovieURL}${movieId}`);
+  }
+  updateMovie(data, movieId) {
+    return this.http.put(`${this.updateMovieURL}${movieId}`, data);
   }
 
   fetchActors() {

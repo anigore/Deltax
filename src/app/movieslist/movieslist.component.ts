@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../shared/http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movieslist',
@@ -10,18 +11,16 @@ export class MovieslistComponent implements OnInit {
 
   movieList: [];
 
-  constructor(private http: HttpService, ) { }
+  constructor(private http: HttpService,
+    private router: Router) { }
 
   ngOnInit() {
     this.http.fetchMovieList().subscribe((res: any) => {
       this.movieList = res.movies;
-      console.log('list>>>>>>>!', this.movieList)
-
     })
-
   }
 
-  editMovie(movieId){
-
+  editMovie(movieId:number) {
+    this.router.navigate(['editmovie',movieId]);
   }
 }

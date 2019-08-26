@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from '../shared/http.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -17,12 +17,13 @@ export class AddmovieComponent implements OnInit {
   movieForm: FormGroup;
   modalRef: BsModalRef;
   image: File
-
+  movieId: any
 
   constructor(private fb: FormBuilder,
     private http: HttpService,
     private router: Router,
-    private modalService: BsModalService) { }
+    private modalService: BsModalService,
+    private activatedRoute: ActivatedRoute) { }
 
   validationMessages = {
     'movieName': {
@@ -58,6 +59,14 @@ export class AddmovieComponent implements OnInit {
 
   ngOnInit() {
 
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.movieId = params.get('id');
+      console.log('id - ', this.movieId);
+      if (this.movieId) {
+        this.getSingleMovie(this.movieId);
+      }
+    })
+
     this.fetchActors();
 
     this.movieForm = this.fb.group({
@@ -67,6 +76,7 @@ export class AddmovieComponent implements OnInit {
       poster: ['', Validators.required],
       actors: ['', Validators.required]
     })
+
 
     this.movieForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.movieForm);
@@ -97,6 +107,30 @@ export class AddmovieComponent implements OnInit {
 
   uploadPoster(event) {
     this.image = event.files[0];
+    this.http.uploadPhoto(this.image).subscribe((res: any) => {
+      if (res.status == 'success') {
+        this.movieForm.get('poster').setValue(res.docs);
+      }
+      else {
+        alert(res.err)
+      }
+    });
+
+  }
+
+  getSingleMovie(movieId) {
+    this.http.getSingleMovie(movieId).subscribe((res: any) => {
+      console.log(res.docs)
+
+      this.movieForm.patchValue({
+        movieName: res.docs.movieName,
+        yearOfRelease: res.docs.yearOfRelease,
+        plot: res.docs.plot,
+        poster:res.docs.poster,
+        actors: res.docs.actors
+      })
+
+    })
   }
 
   fetchActors() {
@@ -122,25 +156,26 @@ export class AddmovieComponent implements OnInit {
 
 
   onClick() {
-    this.http.uploadPhoto(this.image).subscribe((res: any) => {
-      if (res.status == 'success') {
-        this.movieForm.get('poster').setValue(res.docs);
-        this.http.createMovie(this.movieForm.value).subscribe((res: any) => {
-          if (res.status == true) {
-            alert(res.message)
-            this.router.navigate(['/movieslist'])
-          }
-          else {
-            alert(res.err)
-          }
-
-        })
-      }
-      else {
-        alert(res.err)
-      }
-    });
-
-
+    if (this.movieId) {
+      this.http.updateMovie(this.movieForm.value, this.movieId).subscribe((res: any) => {
+        if (res.status == true) {
+          alert(res.message)
+          this.router.navigate(['/movieslist'])
+        }
+        else {
+          alert(res.err)
+        }
+      })
+    } else {
+      this.http.createMovie(this.movieForm.value).subscribe((res: any) => {
+        if (res.status == true) {
+          alert(res.message)
+          this.router.navigate(['/movieslist'])
+        }
+        else {
+          alert(res.err)
+        }
+      })
+    }
   }
 }

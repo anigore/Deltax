@@ -82,7 +82,6 @@ export class AddActorComponent implements OnInit {
 
 
   onClick() {
-    console.log('actor form data - ', this.actorsForm.value);
     this.http.createActor(this.actorsForm.value).subscribe((res: any) => {
       if (res.status == true) {
         this.actorsForm.reset()

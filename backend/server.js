@@ -8,32 +8,23 @@ var cors = require('cors');
 var db;
 app.use(bodyparser.json());
 app.use(express.static('public'));
- app.use("/uploads",express.static('uploads'));
-
-
-
+app.use("/uploads", express.static('uploads'));
 app.set('port', config.port);
 
-//database connection
+/**Database connection */
+
 mongoose.connect(config.mongo.url, { useNewUrlParser: true }, function (err, database) {
     if (err) {
         console.log(err);
         process.exit(1);
     }
-
     db = database;
     console.log("database connection done....!");
-
 });
-
-
 app.listen(app.get('port'), function () {
     console.log('Express Server Listing on port ::: 3000');
-    //persons.emailSender();
 });
-
 app.use(cors());
-
 app.all('/*', function (req, res, next) {
 
     res.header("Allow-Control-Allow-Order", "*");
@@ -46,13 +37,8 @@ app.all('/*', function (req, res, next) {
     else {
         next();
     }
-
 });
-
-
 app.use('/', require('./routes'));
-
-
 app.use(function (req, res, next) {
     res.status(404).json({ status: "Page Not Found,Sorry..." }).end();
 });
