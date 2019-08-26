@@ -24,7 +24,7 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let movie of movieList" class="smooth-scroll list-unstyled"
+                    <tr *ngFor="let movie of movieList">
                         <td><img src="http://localhost:3000/{{movie.poster}}" alt="{{movie.movieName}}"></td>
                         <td>{{movie.movieName}}</td>
                         <td>{{movie.yearOfRelease}}</td>
