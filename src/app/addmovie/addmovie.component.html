@@ -65,7 +65,7 @@
     <div style="margin:5% 10% 5% 50%;" class="row">
         <button class="btn btn-success" (click)="onClick()" type="submit">Save</button>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-secondary" (click)="onCancle">cancle</button>
+        <button class="btn btn-secondary" (click)="cancle()">cancle</button>
     </div>
 </form>
 
@@ -81,7 +81,7 @@
     <div class="modal-body">
         <app-add-actor></app-add-actor>
         <button type="button" class="btn btn-secondary btn-lg btn-block" (click) = "refresh()">
-            <span aria-hidden="true">cancle</span>
+            <span aria-hidden="true" (click) = "cancle()">cancle</span>
         </button>
     </div>
 </ng-template>

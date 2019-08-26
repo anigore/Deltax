@@ -126,7 +126,7 @@ export class AddmovieComponent implements OnInit {
         movieName: res.docs.movieName,
         yearOfRelease: res.docs.yearOfRelease,
         plot: res.docs.plot,
-        poster:res.docs.poster,
+        poster: res.docs.poster,
         actors: res.docs.actors
       })
 
@@ -152,6 +152,12 @@ export class AddmovieComponent implements OnInit {
   refresh() {
     this.fetchActors();
     this.modalRef.hide()
+  }
+
+  cancle() {
+    console.log('done...')
+    this.router.navigate(['/movieslist'])
+
   }
 
 
