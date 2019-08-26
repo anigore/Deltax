@@ -1,0 +1,58 @@
+<form style="width:80%;" [formGroup]="actorsForm">
+    <div class="form-group">
+        <label>Actor Name</label>
+        <input
+            [class.is-invalid]="(actorsForm.controls.actorName.invalid) && (actorsForm.controls.actorName.touched || actorsForm.controls.actorName.dirty)"
+            type="text" class="form-control" id="actorName" formControlName="actorName" (blur)="logValidationErrors()">
+        <small class="text-danger" *ngIf="formErrors.actorName">
+            {{formErrors.actorName}}
+        </small>
+    </div>
+    <br>
+    <div>
+        <label>Sex</label><br>
+        <div class="form-check-inline">
+            <label class="form-check-label" for="radio1">
+                <input type="radio" class="form-check-input" formControlName="sex" id="radio1" name="sex" value="Male"
+                    checked>Male
+            </label>
+        </div>
+        <div class="form-check-inline">
+            <label class="form-check-label" for="radio2">
+                <input type="radio" class="form-check-input" id="radio2" name="sex" formControlName="sex"
+                    value="Female">Female
+            </label>
+        </div>
+
+        <div class="form-check-inline">
+            <label class="form-check-label" for="radio2">
+                <input type="radio" class="form-check-input" id="radio3" name="sex" formControlName="sex"
+                    value="Other">Other
+            </label>
+        </div>
+
+    </div><br><br>
+
+    <div class="form-group" style="width:265px">
+        <label>Date Of Birth</label>
+        <input
+            [class.is-invalid]="(actorsForm.controls.dateOfBirth.invalid) && (actorsForm.controls.dateOfBirth.touched || actorsForm.controls.dateOfBirth.dirty)"
+            type="date" class="form-control" id="year" formControlName="dateOfBirth" (blur)="logValidationErrors()">
+        <small class="text-danger" *ngIf="formErrors.dateOfBirth">
+            {{formErrors.dateOfBirth}}
+        </small>
+    </div><br>
+    <div class="form-group">
+        <label>Bio</label>
+        <textarea
+            [class.is-invalid]="(actorsForm.controls.bio.invalid) && (actorsForm.controls.bio.touched || actorsForm.controls.bio.dirty)"
+            class="form-control" id="bio" rows="3" formControlName="bio" (blur)="logValidationErrors()"></textarea>
+        <small class="text-danger" *ngIf="formErrors.bio">
+            {{formErrors.bio}}
+        </small>
+    </div>
+</form>
+<div style="margin-top:5%">
+    <button type="submit" class="btn btn-success btn-lg btn-block" (click)="onClick()"
+        [disabled]="!actorsForm.valid">Save and Add</button><br>
+</div>

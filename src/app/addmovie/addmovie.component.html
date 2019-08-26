@@ -1,0 +1,87 @@
+<br>
+<div>
+    <h2 style="color:rgb(99, 97, 97)"><b>#<u> Add New Movie </u></b></h2>
+</div><br>
+
+<form style="width:80%;" [formGroup]="movieForm">
+    <div class="form-group">
+        <label>Movie Name</label>
+        <input
+            [class.is-invalid]="(movieForm.controls.movieName.invalid) && (movieForm.controls.movieName.touched || movieForm.controls.movieName.dirty)"
+            type="text" class="form-control" id="movieName" formControlName="movieName" (blur)="logValidationErrors()">
+        <small class="text-danger" *ngIf="formErrors.movieName">
+            {{formErrors.movieName}}
+        </small>
+    </div>
+    <div class="form-group">
+        <label>Year Of Release</label>
+        <input
+            [class.is-invalid]="(movieForm.controls.yearOfRelease.invalid) && (movieForm.controls.yearOfRelease.touched || movieForm.controls.yearOfRelease.dirty)"
+            type="text" class="form-control" id="year" formControlName="yearOfRelease" (blur)="logValidationErrors()">
+        <small class="text-danger" *ngIf="formErrors.yearOfRelease">
+            {{formErrors.yearOfRelease}}
+        </small>
+    </div>
+    <div class="form-group">
+        <label>Plot</label>
+        <textarea
+            [class.is-invalid]="(movieForm.controls.plot.invalid) && (movieForm.controls.plot.touched || movieForm.controls.plot.dirty)"
+            class="form-control" id="plot" rows="3" formControlName="plot" (blur)="logValidationErrors()"></textarea>
+        <small class="text-danger" *ngIf="formErrors.plot">
+            {{formErrors.plot}}
+        </small>
+    </div><br>
+
+    <div class="form-group ">
+        <div class="row" style="margin-left:0px">
+            <label>Poster</label>
+            <div style="margin-left:5%" class="form-group">
+                <input #imageInput type="file" (change)="uploadPoster(imageInput)" accept="image/*"
+                    (blur)="logValidationErrors()">
+                <span class="text-danger" *ngIf="formErrors.photo">
+                    {{formErrors.poster}}
+                </span>
+            </div>
+        </div>
+    </div><br>
+    <div class="form-group ">
+        <label>Cast</label>
+        <div class="row" style="margin-left:0px">
+            <div style="width:80%" multiple>
+                <ng-select [multiple]="true" placeholder="select actors" formControlName="actors">
+                    <ng-option *ngFor="let actor of actors" [value]="actor.actorName" [disabled]="actor.disabled">
+                        {{actor.actorName}}
+                    </ng-option>
+                </ng-select>
+            </div>
+
+            <div style="margin-left:10%">
+                <button class="btn btn-primary" (click)="openModal(template)"><i class="fa fa-plus"
+                        aria-hidden="true"></i>
+                    Actor</button>
+            </div>
+        </div>
+    </div>
+    <div style="margin:5% 10% 5% 50%;" class="row">
+        <button class="btn btn-success" (click)="onClick()" type="submit">Save</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-secondary" (click)="onCancle">cancle</button>
+    </div>
+</form>
+
+
+
+<ng-template #template>
+    <div class="modal-header">
+        <h2 class="modal-title pull-left" style="color:rgb(99, 97, 97)"><b>#<u> Add Actor </u></b></h2>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-add-actor></app-add-actor>
+        <button type="button" class="btn btn-secondary btn-lg btn-block" (click) = "refresh()">
+            <span aria-hidden="true">cancle</span>
+        </button>
+    </div>
+</ng-template>

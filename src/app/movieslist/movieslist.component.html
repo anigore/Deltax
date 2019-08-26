@@ -1,0 +1,43 @@
+<section>
+    <div>
+        <br>
+        <div class="row">
+            <h2 style="color:rgb(99, 97, 97);margin-left: 2% "><b># <u> Top 10 Movies 2019 </u></b></h2>
+            <div style="margin-left: 65%">
+                <button routerLink="/addmovie" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>
+                    Movie</button>
+            </div>
+        </div>
+        <br>
+        <div>
+            <table style="border:1px rgba(54, 54, 54, 0.699) solid;" class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width:120px">Poster</th>
+                        <th style="width:150px">Movie Name</th>
+                        <th style="width:160px">Year Of Release</th>
+                        <th style="width:400px">Plot</th>
+                        <th style="width:400px">Cast</th>
+                        <th style="width:70px">Edit</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let movie of movieList">
+                        <td><img [src]="movie.poster" alt="{{movie.movieName}}"></td>
+                        <td>{{movie.movieName}}</td>
+                        <td>{{movie.yearOfRelease}}</td>
+                        <td>{{movie.plot}}</td>
+                        <label *ngFor="let actor of movie.actors">
+                            <td>{{actor}} ,</td>
+                        </label>
+                        <td><button class="btn" (click)="editMovie(movie._id)"><i class="fa fa-pencil"
+                                    aria-hidden="true"></i></button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
